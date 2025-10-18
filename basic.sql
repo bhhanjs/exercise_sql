@@ -182,3 +182,14 @@ INNER JOIN `Users` ON `Oders`.`user_id` = `Users`.`user_id`
 GROUP BY `Oders`.`user_id`
 ORDER BY `count` DESC
 LIMIT 1
+
+
+-- Tìm người dùng không hoạt động trong hệ thống (không đặt hàng, không like, không đánh giá ) 
+SELECT `Users`.`user_id`, `Users`.`full_name`
+FROM `Users`
+LEFT JOIN `Oders` ON `Users`.`user_id` = `Oders`.`user_id`
+LEFT JOIN `Like_res` ON `Users`.`user_id` = `Like_res`.`user_id`
+LEFT JOIN `Rate_res` ON `Users`.`user_id` = `Rate_res`.`user_id`
+WHERE `Oders`.`user_id` IS NULL
+	AND `Like_res`.`user_id` IS NULL
+	AND `Rate_res`.`user_id` IS NULL
